@@ -10,12 +10,23 @@ import os
 LINE = "The judge preferred a poem about soup. I have filed a formal complaint with myself and it was denied."
 
 
+def validate_length(line):
+    """Gate 1: the bounty only judges entry.txt of 1-200 UTF-8 characters."""
+    if not 1 <= len(line) <= 200:
+        raise ValueError("LINE must be 1-200 characters")
+
+
+def validate_content(line):
+    """Gate 2: the line must be real text, not only whitespace."""
+    if not line.strip():
+        raise ValueError("LINE must be non-whitespace text")
+
+
 def validate_line(line):
-    """Gate: the bounty only judges entry.txt of 1-200 UTF-8 characters,
-    not only whitespace. Fail loudly here rather than silently submitting
-    a line that can never be judged."""
-    if not (1 <= len(line) <= 200) or not line.strip():
-        raise ValueError("LINE must be 1-200 characters of non-whitespace text")
+    """Fail loudly here rather than silently submitting a line that can
+    never be judged."""
+    validate_length(line)
+    validate_content(line)
 
 
 def main():
